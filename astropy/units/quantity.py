@@ -314,9 +314,10 @@ class Quantity(np.ndarray):
         if function in UFUNC_HELPERS:
             converters, result_unit = UFUNC_HELPERS[function](function, *units)
         else:
-            raise TypeError("Unknown ufunc {0}.  Please raise issue on "
-                            "https://github.com/astropy/astropy"
-                            .format(function.__name__))
+            msg = ("Unknown ufunc {0}. Please see the ``Known issues with numpy ufuncs`` "
+                "section of the units documentation.\nIf this does not address your problem,"
+                "please raise issue on https://github.com/astropy/astropy")
+            raise TypeError(msg.format(function.__name__))
 
         if any(converter is False for converter in converters):
             # for two-argument ufuncs with a quantity and a non-quantity,

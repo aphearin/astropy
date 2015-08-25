@@ -298,6 +298,20 @@ not reinitializing it properly (e.g., ``np.hstack``).  This propagates to
 more complex functions such as ``np.linalg.norm`` and
 ``scipy.integrate.odeint``.
 
+Known issues with numpy ufuncs
+--------------------------------------------
+
+While the |quantity| class supports many Numpy ufuncs, it may be necessary 
+to register the ufunc in order to be able to operate on a |quantity|. Below 
+we give an explicit example of how to do this for the error function 
+defined in scipy:
+
+    >>> from astropy.units.quantity_helper import UFUNC_HELPERS, helper_dimensionless_to_dimensionless # doctest: +SKIP
+    ... UFUNC_HELPERS[scipy.special.erf] = helper_dimensionless_to_dimensionless
+    ... q = u.Quantity(1.0, u.one)
+    ... erfq = scipy.special.erf(q)
+
+
 Subclassing Quantity
 --------------------
 
